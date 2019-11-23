@@ -13,13 +13,14 @@ char pass[] = SECRET_PASS;
 int keyIndex = 0;
 int status = WL_IDLE_STATUS;
 char mqttHost[] = SECRET_MQTT_HOST;
+int mqttPort = 8883;
 char mqttClientId[] = SECRET_MQTT_CLIENT_ID;
 //long randNumber;
 char mqttUser[] = SECRET_MQTT_USER;
 char mqttPass[] = SECRET_MQTT_PASS;
 unsigned long lastMillis = 0;
 
-WiFiClient net;
+WiFiSSLClient net;
 MQTTClient mqttClient;
 RTCZero rtc; // create an RTC object
 
@@ -157,7 +158,7 @@ void connectMqttServer()
     char mqttClientId[] = String(randNumber);
     */
     // MQTT client connection request
-    mqttClient.begin(mqttHost, net);
+    mqttClient.begin(mqttHost, mqttPort, net);
     Serial.print("\nconnecting to MQTT server...");
     while (!mqttClient.connect(mqttClientId, mqttUser, mqttPass))
     {
